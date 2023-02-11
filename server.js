@@ -3,5 +3,5 @@ const app = express();
 
 app.use(express.static(__dirname+'/'));
 
-console.log('msg');
+console.log(`someVariable: ${ someVariable }`);
 app.listen(8080);
