@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
 
-let port = parseInt(Deno.env.get("PORT") ?? "8000");
+let port = parseInt(Deno.env.get("PORT") ?? "8080");
 const s = serve({ port });
 
 console.log(`http://localhost:${port}/`);
