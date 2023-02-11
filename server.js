@@ -3,5 +3,5 @@ const app = express();
 
 app.use(express.static(__dirname+'/'));
 
-console.log('escuchando 8080');
+console.log(data);
 app.listen(8080);
