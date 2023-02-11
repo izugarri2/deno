@@ -1,10 +1,16 @@
-import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
+import { Application } from "https://deno.land/x/oak@v11.1.0/mod.ts";
 
-let port = parseInt(Deno.env.get("PORT") ?? "8080");
-const s = serve({ port });
+const app = new Application();
+app.use(async (ctx) => {
+  try {
+    await ctx.send({
+      root: `${Deno.cwd()}`,
+      index: "index.html",
+    });
+  } catch {
+    ctx.response.status = 404;
+    ctx.response.body = "404 - No found - Página no encontrada";
+  }
+});
 
-console.log(`http://localhost:${port}/`);
-
-for await (const req of s) {
-	req.respond({ body: "Choo Choo! Welcome to your Deno app\n" });
-}
+await app.listen({ port: 8080 });
