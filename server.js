@@ -2,6 +2,5 @@ const express = require('express');
 const app = express();
 
 app.use(express.static(__dirname+'/'));
-
-console.log(`someVariable: ${ someVariable }`);
+console.log(req.body) 
 app.listen(8080);
