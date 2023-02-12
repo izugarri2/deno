@@ -1,14 +1,11 @@
-import { serve } from "https://deno.land/std@0.173.0/http/server.ts";
+  import { cors } from "https://deno.land/x/abc@v1.2.4/middleware/cors.ts";
+  import { Application } from "https://deno.land/x/abc@v1.2.4/mod.ts";
 
-const port = 8080;
+  const APP_PORT = 8080;
 
-const handler = (request: Request): Response => {
-  const body = `Your user-agent is:\n\n${
-    request.headers.get("user-agent") ?? "Unknown"
-  }`;
+  const app = new Application();
 
-  return new Response(body, { status: 200 });
-};
+  app.static("/", "build", cors())
+    .start({ port: APP_PORT });
 
-console.log(`HTTP webserver running. Access it at: http://localhost:8080/`);
-await serve(handler, { port });
+  console.log(`Server listening on http://localhost:${APP_PORT}`);
