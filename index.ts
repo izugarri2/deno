@@ -1,29 +1,14 @@
-import { serve } from "https://deno.land/std@0.114.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.173.0/http/server.ts";
 
-const PORT = 8080;
+const port = 8080;
 
-const handler = async (request: Request): Promise<Response> => {
-  console.log("Request:", request.method, request.url);
-  const { pathname, search } = new URL(request.url);
+const handler = (request: Request): Response => {
+  const body = `Your user-agent is:\n\n${
+    request.headers.get("user-agent") ?? "Unknown"
+  }`;
 
-  if (request.method === "GET") {
-    // GET リクエストの場合は、クエリパラメータを返す
-    const data = JSON.stringify({ pathname, search }, null, 2);
-    console.log("Request Data:", data);
-    return new Response(data, {
-      headers: { "Content-Type": "application/json" },
-    });
-  } else if (request.method === "POST") {
-    // POST リクエストの場合は、リクエストボディを返す
-    const payload = await request.text();
-    const data = JSON.stringify({ pathname, payload }, null, 2);
-    console.log("Request Data:", data);
-    return new Response(data, {
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-  return new Response("Not Found", { status: 404 });
+  return new Response(body, { status: 200 });
 };
 
-console.log(`Listening on http://localhost:${PORT}/`);
-await serve(handler, { addr: `:${PORT}` });
+console.log(`HTTP webserver running. Access it at: http://localhost:8080/`);
+await serve(handler, { port });
